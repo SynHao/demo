@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddIn", "ExcelAddIn\ExcelAddIn.csproj", "{C2D1E288-2CF9-4A15-8D80-9206E20BBE08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics", "Analytics\Analytics.csproj", "{56198B1F-E1FF-46EA-AEB0-27085689EFF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2D1E288-2CF9-4A15-8D80-9206E20BBE08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D1E288-2CF9-4A15-8D80-9206E20BBE08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D1E288-2CF9-4A15-8D80-9206E20BBE08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D1E288-2CF9-4A15-8D80-9206E20BBE08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56198B1F-E1FF-46EA-AEB0-27085689EFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56198B1F-E1FF-46EA-AEB0-27085689EFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56198B1F-E1FF-46EA-AEB0-27085689EFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56198B1F-E1FF-46EA-AEB0-27085689EFF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
