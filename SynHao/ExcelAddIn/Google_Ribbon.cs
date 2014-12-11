@@ -9,7 +9,7 @@ namespace ExcelAddIn
     public partial class Google_Ribbon
     {
         #region 字段
-        private const string queryInfoIndentifier = "queryInfo[";
+        private const string queryInfoIdentifier = "queryInfo[";
 
         UserAccount _user;
         #endregion

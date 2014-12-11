@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
+using Data;
 
 namespace ExcelAddIn
 {
@@ -16,8 +17,8 @@ namespace ExcelAddIn
             Settings settings = Settings.Default;
             if (settings.FirstStartup)
             {
-                // settings.Dimensions = Analytics.Data.Validation.XmlLoader.Dimensions;
-                // settings.Metrics = Analytics.Data.Validation.XmlLoader.Metrics;
+                settings.Dimensions = Analytics.Data.Validation.XmlLoader.Dimensions;
+                settings.Metrics = Analytics.Data.Validation.XmlLoader.Metrics;
                 settings.FirstStartup = false;
                 settings.Save();
             }

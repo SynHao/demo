@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Analytics.Authorization
 {
-    public  class UserSegment
+    public class UserSegment
     {
         private string _segmentId;
         private string _segmentName;
