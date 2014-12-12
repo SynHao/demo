@@ -17,8 +17,8 @@ namespace ExcelAddIn
             Settings settings = Settings.Default;
             if (settings.FirstStartup)
             {
-                settings.Dimensions = Analytics.Data.Validation.XmlLoader.Dimensions;
-                settings.Metrics = Analytics.Data.Validation.XmlLoader.Metrics;
+                // settings.Dimessions = Analytics.Data.Validation.XmlLoader.Dimensions;
+                // settings.Metrics = Analytics.Data.Validation.XmlLoader.Metrics;
                 settings.FirstStartup = false;
                 settings.Save();
             }
@@ -29,8 +29,8 @@ namespace ExcelAddIn
             Analytics.Settings.Instance.ProxyPort = settings.ProxyPort;
             Analytics.Settings.Instance.ProxyUsername = settings.ProxyUsername;
             Analytics.Settings.Instance.RequestTimeout = settings.RequestTimeout;
-            Analytics.Settings.Instance.MetricsXml = settings.Metrics;
-            Analytics.Settings.Instance.DimessionsXml = settings.Dimensions;
+            // Analytics.Settings.Instance.MetricsXml = settings.Metrics;
+            // Analytics.Settings.Instance.DimensionsXml = settings.Dimessions;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

@@ -145,12 +145,12 @@ namespace ExcelAddIn {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Xml.XmlDocument Dimensions {
+        public global::System.Xml.XmlDocument Dimessions {
             get {
-                return ((global::System.Xml.XmlDocument)(this["Dimensions"]));
+                return ((global::System.Xml.XmlDocument)(this["Dimessions"]));
             }
             set {
-                this["Dimensions"] = value;
+                this["Dimessions"] = value;
             }
         }
         
@@ -198,6 +198,42 @@ namespace ExcelAddIn {
             }
             set {
                 this["AutoEscapeFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TokenUri {
+            get {
+                return ((string)(this["TokenUri"]));
+            }
+            set {
+                this["TokenUri"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://accounts.google.com/o/oauth2/auth")]
+        public string Setting {
+            get {
+                return ((string)(this["Setting"]));
+            }
+            set {
+                this["Setting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Token {
+            get {
+                return ((string)(this["Token"]));
+            }
+            set {
+                this["Token"] = value;
             }
         }
     }

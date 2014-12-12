@@ -32,7 +32,7 @@
     <Setting Name="RequestTimeout" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
-    <Setting Name="Dimensions" Type="System.Xml.XmlDocument" Scope="User">
+    <Setting Name="Dimessions" Type="System.Xml.XmlDocument" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Metrics" Type="System.Xml.XmlDocument" Scope="User">
@@ -46,6 +46,15 @@
     </Setting>
     <Setting Name="AutoEscapeFilter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TokenUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Setting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://accounts.google.com/o/oauth2/auth</Value>
+    </Setting>
+    <Setting Name="Token" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

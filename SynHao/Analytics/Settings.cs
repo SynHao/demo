@@ -22,8 +22,11 @@ namespace Analytics
         public bool UseProxy = false;
         public string ProxyUsername = string.Empty;
         public string ProxyPassword = string.Empty;
+        public string ClientId = "587309872788-g295nn514r7jf2k79g8108rp6cr08hor.apps.googleusercontent.com";
+        public string ClientSecret = "uRt6iXDwVly2mZY_fsOi4jF4";
 
-        public System.Xml.XmlDocument DimessionsXml;
         public System.Xml.XmlDocument MetricsXml;
+
+        public System.Xml.XmlDocument DimensionsXml;
     }
 }

@@ -70,6 +70,7 @@
             // 
             this.buttonAccount.Label = "账户";
             this.buttonAccount.Name = "buttonAccount";
+            this.buttonAccount.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonAccount_Click_1);
             // 
             // separator1
             // 
