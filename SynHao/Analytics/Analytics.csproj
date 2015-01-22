@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
@@ -48,6 +52,16 @@
     <Compile Include="Authorization\UserSegment.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DataProtectionHelper.cs" />
+    <Compile Include="Data\Accounts\ChildLinkData.cs" />
+    <Compile Include="Data\Accounts\ColumnsData.cs" />
+    <Compile Include="Data\Accounts\ColumnsItems.cs" />
+    <Compile Include="Data\Accounts\ColumnsItemsAttributes.cs" />
+    <Compile Include="Data\Accounts\DimessionAndMetricsGroups.cs" />
+    <Compile Include="Data\Accounts\DimessionsOrMetrics.cs" />
+    <Compile Include="Data\Accounts\GoogleAnalyticsView.cs" />
+    <Compile Include="Data\Accounts\GoogleAnalyticsViewItem.cs" />
+    <Compile Include="Data\Accounts\Link.cs" />
+    <Compile Include="Data\Accounts\PermissionsData.cs" />
     <Compile Include="Data\Enums\Enums.cs" />
     <Compile Include="Data\Fiter.cs" />
     <Compile Include="Data\FiterItem.cs" />
@@ -57,6 +71,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GA_RequestURIs.settings</DependentUpon>
     </Compile>
+    <Compile Include="Data\Accounts\GoogleAnalytics.cs" />
+    <Compile Include="Data\Accounts\GoogleAnalyticsAccounts.cs" />
     <Compile Include="Data\Item.cs" />
     <Compile Include="Data\Query.cs" />
     <Compile Include="Data\Report.cs" />
@@ -90,11 +106,12 @@
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\General\Dimensions.xml" />
-    <Content Include="Data\General\Metrics.xml" />
+    <EmbeddedResource Include="Data\General\Dimensions.xml" />
+    <EmbeddedResource Include="Data\General\Metrics.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Data\General\dimensions.xsc">
       <DependentUpon>dimensions.xsd</DependentUpon>
     </None>
@@ -121,6 +138,7 @@
     <None Include="Data\General\metrics.xss">
       <DependentUpon>metrics.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

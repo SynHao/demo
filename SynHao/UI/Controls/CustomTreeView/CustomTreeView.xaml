@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="UI.Controls.CustomTreeView.CustomTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dw="clr-namespace:UI.Controls.CustomTreeView"
+             xmlns:local="clr-namespace:UI.Controls.CustomTreeView"
+             mc:Ignorable="d" 
+             FontSize="13">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TreeViewItemStyle" TargetType="TreeViewItem">
+                <Setter Property="IsExpanded" Value="{Binding IsInitiallyExpanded, Mode=OneTime}"></Setter>
+                <Setter Property="IsSelected" Value="{Binding IsInitiallySelected,Mode=OneTime}"></Setter>
+                <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"></Setter>
+                <Setter Property="dw:VirtualToggleButton.IsVirtualToggleButton" Value="True"></Setter>
+                <Setter Property="dw:VirtualToggleButton.IsChecked" Value="{Binding IsChecked}"></Setter>
+                <Setter Property="dw:VirtualToggleButton.IsEnabled" Value="{Binding IsEnabled}"></Setter>
+            </Style>
+
+            <HierarchicalDataTemplate x:Key="CheckBoxItemTemplate" ItemsSource="{Binding Children,Mode=OneTime}">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox ForceCursor="False" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center"></CheckBox>
+                    <ContentPresenter Content="{Binding Name, Mode=OneTime}"></ContentPresenter>
+                </StackPanel>
+            </HierarchicalDataTemplate>
+
+            <ObjectDataProvider x:Key="dimProvider" MethodName="CreateDimensions" ObjectType="{x:Type local:SizeViewModel}"></ObjectDataProvider>
+            <ObjectDataProvider x:Key="metProvider" MethodName="CreateMetrics" ObjectType="{x:Type local:SizeViewModel}"></ObjectDataProvider>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <TreeView Panel.ZIndex="1" x:Name="tress" ItemContainerStyle="{StaticResource TreeViewItemStyle}" ItemsSource="{Binding Mode=OneTime}" ItemTemplate="{StaticResource CheckBoxItemTemplate}"></TreeView>
+</UserControl>

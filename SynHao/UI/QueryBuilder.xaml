@@ -1,0 +1,223 @@
+﻿<Window x:Class="UI.QueryBuilder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:Custom ="clr-namespace:UI.Controls.CustomTreeView"
+        xmlns:enum ="clr-namespace:Analytics.Data.Enums;assembly=Analytics"
+        xmlns:Custom1 ="clr-namespace:UI.Controls.NotifyError"
+        WindowStyle="SingleBorderWindow" AllowsTransparency="False"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" ResizeMode="CanResizeWithGrip" SnapsToDevicePixels="False"
+        Title="Google数据导入" Background="LightGray"
+        >
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="listbTemplate">
+                <TextBlock Margin="0,5,0,0" Text="{Binding Key}"></TextBlock>
+            </DataTemplate>
+
+            <DataTemplate x:Key="filterChooserTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Panel.ZIndex="-1" HorizontalAlignment="Right" VerticalAlignment="Bottom" x:Name="logOPBox" Width="50" Height="20">
+                        <ComboBoxItem>
+                            <enum:LogicalOperator>And</enum:LogicalOperator>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <enum:LogicalOperator>Or</enum:LogicalOperator>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Margin="5,0,0,0" VerticalAlignment="Bottom" Text="{Binding Path=SimplifiedString}"></TextBlock>
+                </StackPanel>
+                
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Path=LOperator}">
+                        <DataTrigger.Value>
+                            <enum:LogicalOperator>And</enum:LogicalOperator>
+                        </DataTrigger.Value>
+                        <Setter TargetName="logOPBox" Property="SelectedIndex" Value="0"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=LOperator}">
+                        <DataTrigger.Value>
+                            <enum:LogicalOperator>Or</enum:LogicalOperator>
+                        </DataTrigger.Value>
+                        <Setter TargetName="logOPBox" Property="SelectedIndex" Value="1" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="combSizeTemplate">
+                <ContentPresenter Content="{Binding Key}" Tag="{Binding Value}"></ContentPresenter>
+            </DataTemplate>
+
+            <DataTemplate x:Key="comboOperatorTemplate">
+                <ContentPresenter Content="{Binding Key}" Tag="{Binding Value}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="defaultString">
+                <TextBlock Text="{Binding}" TextWrapping="Wrap" Height="auto"></TextBlock>
+            </DataTemplate>
+
+            <LinearGradientBrush x:Key="sizeBorderBrush">
+                <GradientStop Color="Black" Offset="0.5"></GradientStop>
+                <GradientStop Color="White" Offset="1.0"></GradientStop>
+            </LinearGradientBrush>
+
+            <Style x:Key="listStyle">
+                <Style.Triggers>
+                    <Trigger Property="FrameworkElement.ActualHeight" Value="100">
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Canvas x:Name="MainCanvas" Height="595" Width="773" VerticalAlignment="Stretch">
+            <Expander Canvas.Left="4" Canvas.Top="259" Panel.ZIndex="1" Cursor="Hand" x:Name="DimessionsExpander" ExpandDirection="Down" Padding="0"
+                      IsExpanded="False" DataContext="{Binding}" Expanded="DimessionsExpander_Expanded" Collapsed="DimessionsExpander_Collapsed">
+                <Custom:CustomTreeView Background="LightGray" Cursor="Arrow"   Panel.ZIndex="1" Margin="0,5,0,0" x:Name="DimensionsView" Height="261" Width="329" MaxHeight="261" ItemDataType="Dimensions"/>
+                <Expander.Header>
+                    <Button Width="80" HorizontalContentAlignment="Center" Content="维度" Click="Button_Click"></Button>
+                </Expander.Header>
+            </Expander>
+
+            <Expander  Canvas.Left="122" Canvas.Top="259" Panel.ZIndex="1" Cursor="Hand" x:Name="MetricsExpander" ExpandDirection="Down" Padding="0" IsExpanded="False">
+                <Custom:CustomTreeView ItemDataType="Metrics" Cursor="Arrow" Panel.ZIndex="1" Margin="-120,5,0,0" x:Name="MetricsView" Height="260" MaxHeight="261" Width="333"/>
+                <Expander.Header>
+                    <Button Width="80" HorizontalContentAlignment="Center" Content="指标"></Button>
+                </Expander.Header>
+            </Expander>
+            <Expander Canvas.Left="232" Canvas.Top="259" Panel.ZIndex="1" Cursor="Hand" x:Name="FilterExpander" ExpandDirection="Down" Padding="0" IsExpanded="False" Expanded="FilterExpander_Expanded">
+                <Canvas FocusManager.FocusedElement="{Binding ElementName=addFilter}" Cursor="Arrow" Background="LightGray" Panel.ZIndex="1" x:Name="FilterCanvas" Margin="-230,5,0,0" Width="750" Height="270">
+                    <Label Content="操作者" Canvas.Left="175" Canvas.Top="44" Height="25" Width="58"></Label>
+                    <ComboBox x:Name="comboBoxOperator" Width="134"  Canvas.Left="180" Canvas.Top="68" Height="21" ItemTemplate="{StaticResource comboOperatorTemplate}"></ComboBox>
+                    <Label Content="表达式" Canvas.Left="332" Canvas.Top="44"></Label>
+                    <TextBox Focusable="True" x:Name="textBoxExpression" Width="156" Canvas.Left="336" Canvas.Top="68"></TextBox>
+                    <Button x:Name="addFilter" Canvas.Left="279" Canvas.Top="121" Content="增加" Height="26" Width="60"></Button>
+                    <Button x:Name="removeFilter" Canvas.Left="191" Canvas.Top="121" Content="移除" Height="26" Width="60" />
+                    <ListBox x:Name="filterBox" Canvas.Left="60" Canvas.Top="151" Width="431" Height="91" BorderThickness="1" ItemTemplate="{StaticResource filterChooserTemplate}"/>
+                    <ComboBox Canvas.Left="40" Canvas.Top="90" x:Name="comboBoxMetrics" Width="98" Height="21" ItemTemplate="{StaticResource combSizeTemplate}"/>
+                    <ComboBox Canvas.Left="40" Canvas.Top="25"  x:Name="comboBoxDimensions" Width="98" Height="21" ItemTemplate="{StaticResource combSizeTemplate}" />
+                    <Label Canvas.Left="40" Content="维度" Canvas.Top="5" Name="label1" Height="26"/>
+                    <Label Canvas.Left="40" Content="指标" Canvas.Top="65" Name="label2" Height="26"/>
+                </Canvas>
+                <Expander.Header>
+                    <Button Width="80" HorizontalAlignment="Center" Content="过滤器"/>
+                </Expander.Header>
+            </Expander>
+
+            <ListBox Background="White" Panel.ZIndex="0" Margin="0,15,0,0" ScrollViewer.CanContentScroll="False" Canvas.Left="8" Canvas.Top="280" Height="209" x:Name="dimensionsSelected" Width="114" ItemTemplate="{StaticResource listbTemplate}"/>
+            <ListBox Background="White" Panel.ZIndex="0" Margin="0,15,0,0" ScrollViewer.CanContentScroll="False" Canvas.Left="124" Canvas.Top="280" Height="209" x:Name="metricsSelected" Width="114" ItemTemplate="{StaticResource listbTemplate}"/>
+            <ListBox Background="LightGray" Panel.ZIndex="0" Margin="0,15,0,0" ScrollViewer.CanContentScroll="False" Canvas.Left="247" Canvas.Top="280" BorderBrush="Transparent" x:Name="activeFilters" Width="170" Height="209" ItemTemplate="{StaticResource defaultString}"/>
+            <ListBox Background="LightGray" Panel.ZIndex="0" Margin="0,15,0,0" ScrollViewer.CanContentScroll="False" Canvas.Left="450" Canvas.Top="280" BorderBrush="Transparent" x:Name="activeSortings" Width="112" Height="209" ItemTemplate="{StaticResource defaultString}"/>
+            <ListBox Background="LightGray" Panel.ZIndex="0" Margin="0,15,0,0" ScrollViewer.CanContentScroll="False" Canvas.Left="600" Canvas.Top="280" BorderBrush="Transparent" x:Name="activeViews" Width="112" Height="209" ItemTemplate="{StaticResource defaultString}"/>
+
+            <Button FontWeight="Bold" x:Name="ExecuteButton" Height="23" Content="执行" Width="60" Canvas.Left="645" Canvas.Top="561"/>
+            <Button x:Name="CancelButton" Height="23" Content="取消" Width="60" Canvas.Left="562" Canvas.Top="561"/>
+            <Custom1:NotifyError Panel.ZIndex="10" x:Name="MainNotify" Canvas.Left="431" Canvas.Top="460" Visibility="Collapsed" Height="80" Width="274"/>
+            <TextBox Canvas.Left="515" Canvas.Top="47" Height="23" Name="startIndexTextBox" Width="81"/>
+            <Label Canvas.Left="434" Canvas.Top="47" Height="28" Name="label3" Width="70">开始日期</Label>
+            <TextBox Canvas.Left="515" Canvas.Top="89" Height="23" Name="maxResultsTextBox" Width="81" Text=""/>
+            <Label Canvas.Left="436" Canvas.Top="89" Height="28" Name="label4" Width="70">结束日期</Label>
+            <TabControl
+                Canvas.Left="11" Canvas.Top="19" Height="223" Name="timeSpantabControl" Width="377">
+                <TabItem
+                    Header="选择日期" Name="calendarTab">
+                    <Canvas Width="371" Height="184">
+                        <Calendar SelectionMode="SingleDate" x:Name="startDateCalendar" Margin="2,6.387,89,-21.347" Height="168" Canvas.Top="11"/>
+                        <Calendar SelectionMode="SingleDate" x:Name="endDateCalendar" ClipToBounds="False" IsHitTestVisible="True" IsEnabled="True" HorizontalAlignment="Right" Width="179" Height="168" Canvas.Left="186" Canvas.Top="17"/>
+                        <Label Canvas.Left="-2" Canvas.Top="0" Height="28" Name="label5" Width="120">开始日期</Label>
+                        <Label Canvas.Left="181" Canvas.Top="0" Name="label6" Width="112" Height="26">结束日期</Label>
+                    </Canvas>
+                </TabItem>
+                <TabItem Header="时间跨度" Name="timeSpanTab">
+                    <Canvas>
+                        <RadioButton Canvas.Left="20" Canvas.Top="10" Tag="Today" Height="19" Name="todayCheckBox" Width="150">今天</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="35" Tag="Yesterday" Height="19" Name="yesterdayCheckBox" Width="150">昨天</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="60" Tag="Week" Height="19" Name="weekCheckBox" Width="150">上周（周一到周天）</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="85" Tag="WeekAnglo" Height="19" Name="weekCheckBoxAnglosax" Width="150">上周（周日到周一）</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="110" Tag="LastMonth" Height="19" Name="monthCheckBox" Width="120">上月</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="135" Tag="LastQuarter" Height="19" Name="quarterCheckBox" Width="120">上个季度</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="160" Tag="LastYear" Height="19" Name="yearCheckBox">上年</RadioButton>
+                        <RadioButton Canvas.Left="176" Canvas.Top="10" Tag="ThisYear" Height="19" Name="thisYearBox">今年</RadioButton>
+                        <RadioButton Canvas.Left="20" Canvas.Top="160" Tag="PeriodNotSpecified" Height="19" Visibility="Hidden" Name="periodNotSpecifiedCheckBox" Width="120"></RadioButton>
+                    </Canvas>
+                </TabItem>
+            </TabControl>
+            
+            <Expander
+                 Canvas.Left="454" Canvas.Top="259" Panel.ZIndex="1" Cursor="Hand" x:Name="SortExpander" ExpandDirection="Down" Padding="0" IsExpanded="False">
+                <Canvas
+                    FocusManager.FocusedElement="{Binding ElementName=addSortBy}"
+                    Cursor="Arrow" Background="LightGray" Panel.ZIndex="1" x:Name="SortingCanvas" Visibility="Collapsed" Margin="-454,5,0,0" Width="750" Height="255">
+                    <Button x:Name="addSortBy" Canvas.Left="291" Canvas.Top="112" Content="增加" Height="26" Width="60"></Button>
+                    <Button x:Name="removeSortBy" Canvas.Left="200" Canvas.Top="113" Content="移除" Height="26" Width="60"></Button>
+                    <ListBox x:Name="sortingBox" Canvas.Left="60" Canvas.Top="151" Width="431" Height="91" BorderThickness="1"></ListBox>
+                    <ComboBox ItemsSource="{Binding}" Canvas.Left="58" Canvas.Top="59" SelectedIndex="0" Name="sortBycomboBox" Width="113">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Key}" Tag="{Binding Value}"></ContentPresenter>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Canvas.Left="58" Content="排序依据" Canvas.Top="31" Name="sort" Height="26"></Label>
+                    <Button Canvas.Left="203" Canvas.Top="56" Content="升序" Height="28" Name="listOrder" Width="74"></Button>
+                </Canvas>
+                <Expander.Header>
+                    <Button Width="80" HorizontalContentAlignment="Center" Content="排序"></Button>
+                </Expander.Header>
+            </Expander>
+
+            <ComboBox ItemsSource="{Binding}" Canvas.Left="346" Canvas.Top="260" Height="23" Name="comboBoxSegments" Width="97">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding SegmentName}" Tag="{Binding SegmentId}" ToolTipService.InitialShowDelay="2000" Name="contentPresenter"></ContentPresenter>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <Button Canvas.Left="18" Canvas.Top="561" Content="关于" Height="23" Name="About" Width="75"></Button>
+
+            <Expander Canvas.Left="590" Canvas.Top="259" Height="230" Name="View_Expander">
+                <Expander.Header>
+                    <Button Width="80" HorizontalContentAlignment="Center" Content="视图"></Button>
+                </Expander.Header>
+                <Canvas FocusManager.FocusedElement="{Binding ElementName=addFilter}" Cursor="Arrow" Background="LightGray" Panel.ZIndex="30" x:Name="ViewCanvas" Margin="-330,5,0,0" Width="500" Height="265">
+                    <Button x:Name="addView" Canvas.Left="22" Canvas.Top="135" Content="增加" Height="26" Width="60"></Button>
+                    <Button x:Name="removeView" Canvas.Left="22" Canvas.Top="185" Content="移除" Height="26" Width="60"></Button>
+                    <ComboBox ItemsSource="{Binding}" Canvas.Left="11" Canvas.Top="36" Name="comboBoxAccount" Width="150" Height="21">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding AccountName}" Tag="{Binding AccountId}"></ContentPresenter>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox ItemsSource="{Binding}" Canvas.Left="11" Canvas.Top="93" Name="comboBoxView" Width="150" Height="21">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Title}" Tag="{Binding ViewId}"></ContentPresenter>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Canvas.Left="11" Content="视图" Canvas.Top="73" Name="views" Height="26"></Label>
+                    <Label Canvas.Left="11" Content="账户" Canvas.Top="11" Name="accounts" Height="26"></Label>
+                    <ListBox x:Name="viewsBox" Canvas.Left="204" Canvas.Top="16" Width="281" Height="220" BorderThickness="1"></ListBox>
+                </Canvas>
+            </Expander>
+            <Button Canvas.Left="10" Canvas.Top="510" Height="23" Name="button1" Width="54">
+                <Image Source="Resources/up.png"></Image>
+            </Button>
+            <Button Canvas.Left="66" Canvas.Top="510" Height="23" Name="button2" Width="54">
+                <Image Source="Resources/down.png"></Image>
+            </Button>
+            <Button Canvas.Left="126" Canvas.Top="510" Height="23" Name="button3" Width="54">
+                <Image Source="Resources/up.png"></Image>
+            </Button>
+            <Button Canvas.Left="182" Canvas.Top="510" Height="23" Name="button4" Width="54">
+                <Image Source="Resources/down.png"></Image>
+            </Button>
+        </Canvas>
+    </ScrollViewer>
+</Window>

@@ -24,8 +24,15 @@ namespace UI
     {
         public delegate void AuthSuccessful(string autoToken);
         public event AuthSuccessful authSuccessful;
-        UserAccount activeUser;
+        private UserAccount activeUser;
+        private string _refreshToken;
         private byte[] randomBytes = { 4, 32, 62, 9, 145, 5 };
+
+        public UserAccount ActiveUser
+        {
+            get { return activeUser; }
+            set { activeUser = value; }
+        }
 
        // public event Logout logOur;
 
@@ -33,6 +40,16 @@ namespace UI
         {
             InitializeComponent();
 
+        }
+
+        public Login(UserAccount uAcc)
+        {
+            InitializeComponent();
+            if (uAcc != null && !String.IsNullOrEmpty(uAcc.AccessToken))
+            {
+                this.activeUser = uAcc;
+                buttonLogin.Content = "退出";
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -49,7 +66,7 @@ namespace UI
                 accMan.authProgress += new AccountManager.AuthProgress(accMan_authProgress);
 
                 HttpStatusCode status;
-                string authToken = accMan.Authenticate(code, out status);
+                string authToken = accMan.Authenticate("code=" + code, out status, out activeUser);
                 if (!String.IsNullOrEmpty(authToken) && status == HttpStatusCode.OK && authToken != null)
                 {
                     DialogResult = true;
@@ -80,6 +97,12 @@ namespace UI
         void accMan_authProgress(int progress, string progressMessage)
         {
             mainNotify.ErrorMessage = progressMessage;
+        }
+
+        public string RefreshToken
+        {
+            get { return _refreshToken; }
+            set { _refreshToken = value; }
         }
     }
 }

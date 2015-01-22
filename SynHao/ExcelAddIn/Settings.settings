@@ -56,5 +56,8 @@
     <Setting Name="Token" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ClientId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">587309872788-g295nn514r7jf2k79g8108rp6cr08hor.apps.googleusercontent.com</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

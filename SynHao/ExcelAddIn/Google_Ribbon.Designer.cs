@@ -70,7 +70,7 @@
             // 
             this.buttonAccount.Label = "账户";
             this.buttonAccount.Name = "buttonAccount";
-            this.buttonAccount.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonAccount_Click_1);
+            this.buttonAccount.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonAccount_Click);
             // 
             // separator1
             // 
@@ -80,6 +80,7 @@
             // 
             this.buttonQuery.Label = "新的请求";
             this.buttonQuery.Name = "buttonQuery";
+            this.buttonQuery.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonQuery_Click);
             // 
             // buttonUpdate
             // 

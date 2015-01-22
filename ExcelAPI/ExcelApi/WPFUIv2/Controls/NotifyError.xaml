@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="WPFUIv2.Controls.NotifyError"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           >
+    <Border BorderBrush="LightBlue" BorderThickness="1" Padding="5" Background="White">
+        <StackPanel Orientation="Horizontal" >
+            <Image Height="32" Source="notification.png" Width="32"/>
+            <TextBox Name="MessageLabel" Margin="10,0,0,0" Width="150" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Border>
+
+</UserControl>

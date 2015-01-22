@@ -15,10 +15,11 @@ namespace ExcelAddIn
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Settings settings = Settings.Default;
+            // 上传时要更改
             if (settings.FirstStartup)
             {
-                // settings.Dimessions = Analytics.Data.Validation.XmlLoader.Dimensions;
-                // settings.Metrics = Analytics.Data.Validation.XmlLoader.Metrics;
+                settings.Dimessions = Analytics.Data.Validation.XmlLoader.Dimensions;
+                settings.Metrics = Analytics.Data.Validation.XmlLoader.Metrics;
                 settings.FirstStartup = false;
                 settings.Save();
             }
@@ -29,8 +30,8 @@ namespace ExcelAddIn
             Analytics.Settings.Instance.ProxyPort = settings.ProxyPort;
             Analytics.Settings.Instance.ProxyUsername = settings.ProxyUsername;
             Analytics.Settings.Instance.RequestTimeout = settings.RequestTimeout;
-            // Analytics.Settings.Instance.MetricsXml = settings.Metrics;
-            // Analytics.Settings.Instance.DimensionsXml = settings.Dimessions;
+            Analytics.Settings.Instance.MetricsXml = settings.Metrics;
+            Analytics.Settings.Instance.DimensionsXml = settings.Dimessions;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

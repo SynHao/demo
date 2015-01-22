@@ -61,7 +61,7 @@ namespace Analytics.Data.Validation
             {
                 System.Xml.XmlDocument dimessions = new System.Xml.XmlDocument();
                 dimessions.Load(System.Xml.XmlReader.Create(
-                    System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Analytics.Data.General.Dimensions.xml")));
+                        System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Analytics.Data.General.Dimensions.xml")));
                 return dimessions;
             }
         }
@@ -72,7 +72,7 @@ namespace Analytics.Data.Validation
             {
                 System.Xml.XmlDocument metrics = new System.Xml.XmlDocument();
                 metrics.Load(System.Xml.XmlReader.Create(
-                    System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Analytics.Data.General.Dimession.xml")));
+                    System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Analytics.Data.General.Metrics.xml")));
                 return metrics;
             }
         }
